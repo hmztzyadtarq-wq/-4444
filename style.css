@@ -267,3 +267,7 @@ html[dir="ltr"] .car .card { direction: ltr; }
 .area { display: block; width: 100%; text-align: start; border: 1px solid var(--line); background: #fff; padding: 12px 16px; border-radius: 12px; margin-bottom: 8px; font: inherit; cursor: pointer; }
 .area:hover, .area.on { background: var(--cream); color: var(--gold); border-color: var(--gold); }
 @media (max-width: 900px) { .grid.wrap { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; } .pg-title { font-size: 24px; } }
+
+/* الدواير في آخر الموقع */
+.cats-end { margin-top: 20px; }
+.cats-end .cats { padding: 40px 0 10px; }
