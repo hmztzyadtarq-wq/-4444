@@ -15,7 +15,9 @@ const D = {
   'مخبوزات': 'Bakery', 'شيكولاته': 'Chocolate', 'كحك 2026': 'Kahk 2026', 'المولد 2026': 'Mawlid 2026', 'آيس كريم': 'Ice Cream',
   'بسبوسه': 'Basbousa', 'علب مشكل': 'Assorted Boxes', 'مكس شرقي': 'Oriental Mix', 'جلاش': 'Goulash', 'اطباق': 'Plates', 'كنافه': 'Kunafa',
   'علب شرقي جاهزة': 'Ready Oriental Boxes', 'خبز': 'Bread', 'تشيز كيك': 'Cheesecake', 'بوكس': 'Box', 'كرواسون': 'Croissant', 'نص لتر': 'Half Liter',
-  'كب كيك': 'Cupcakes', 'دونات': 'Donuts', 'تارت': 'Tarts', 'علب هدايا': 'Gift Boxes', 'تورتات': 'Cakes',
+  'كب كيك': 'Cupcakes', 'دونات': 'Donuts', 'تارت': 'Tarts', 'علب هدايا': 'Gift Boxes', 'عرض الكل': 'View all', 'عروض اليوم': "Today's Offers", 'عروض الأسبوع': 'Weekly Offers', 'وجبات': 'Meals', 'سلطات': 'Salads',
+  'مشروبات': 'Drinks', 'ملبن': 'Malban', 'بسكوت': 'Biscuits', 'ألواح': 'Bars', 'كحك سادة': 'Plain Kahk', 'كحك بالعجمية': 'Ajamiya Kahk', 'كحك محشي': 'Stuffed Kahk',
+  'حلاوة المولد': 'Mawlid Halawa', 'علب المولد': 'Mawlid Boxes', 'عروسة المولد': 'Mawlid Doll', 'كوب': 'Cups', 'عبوات عائلية': 'Family Tubs', 'تورتات': 'Cakes',
   // الكروت
   'متوفر في المخزون': 'In stock', 'اضف الي عربة': 'Add to cart', 'أضف للسلة': 'Add to cart',
   // الفوتر
