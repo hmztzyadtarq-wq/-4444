@@ -43,7 +43,7 @@ const categories = [
 
 /* 🖼 صفوف المنتجات - كل منتج: الاسم، الاسم بالإنجليزي، القسم، القسم الفرعي، السعر، التقييم، عدد التقييمات،
    stock (اختياري: لو كتبت رقم بيظهر "تبقى فقط N")، والصورة في images/products/
-   الصف اللي فيه carousel:true بيطلع سلايدر بأسهم + الدايرة الخاصة (special) */
+   الصف اللي فيه carousel:true بيطلع سلايدر بأسهم */
 const sections = [
   { title: 'الأكثر رواجًا', en: 'Best Sellers', items: [
     { name: 'بسبوسة سادة (1/4 كيلو)', en: 'Plain Basbousa (1/4 kg)',  cat: 'حلويات مصرية', sub: 'بسبوسه',   price: 50,   rating: 3, reviews: 1, img: 'images/products/1.jpg' },
@@ -60,7 +60,7 @@ const sections = [
     { name: 'كرواسون بالزبدة',           en: 'Butter Croissant',      cat: 'مخبوزات',      sub: 'كرواسون',  price: 40,  rating: 3, reviews: 1, img: 'images/products/10.jpg' }
   ]},
   { title: 'تشكيلة مميزة', en: 'Featured Selection', carousel: true,
-    special: { img: 'images/banners/special.jpg', text: 'OUR SPECIAL GATEAUX' }, items: [
+    items: [
     { name: 'آيس كريم مانجو (نص لتر)', en: 'Mango Ice Cream (half liter)', cat: 'آيس كريم',     sub: 'نص لتر',    price: 85,  rating: 0, reviews: 0, img: 'images/products/11.jpg' },
     { name: 'كب كيك (علبة ٦ قطع)',     en: 'Cupcakes (box of 6)',          cat: 'حلويات غربية', sub: 'كب كيك',    price: 110, rating: 0, reviews: 0, img: 'images/products/12.jpg' },
     { name: 'دونات مشكل (علبة ٦ قطع)', en: 'Assorted Donuts (box of 6)',   cat: 'حلويات غربية', sub: 'دونات',     price: 130, rating: 0, reviews: 0, img: 'images/products/13.jpg' },
@@ -69,6 +69,29 @@ const sections = [
     { name: 'تورتة شيكولاته (وسط)',    en: 'Chocolate Cake (medium)',      cat: 'حلويات غربية', sub: 'تورتات',    price: 350, rating: 0, reviews: 0, stock: 3, img: 'images/products/16.jpg' }
   ]}
 ];
+
+/* 🧭 القائمة العلوية: كل قسم له قايمة اختيارات، وكل اختيار بيفتح صفحة الصنف ده
+   لإضافة اختيار: ضيفه في subs (واسمه لازم يطابق sub في المنتجات عشان يعرض منتجاتها) */
+const menu = [
+  { name: 'الخصومات',     subs: ['عروض اليوم', 'عروض الأسبوع'] },
+  { name: 'مطعم',         subs: ['وجبات', 'سلطات', 'مشروبات'] },
+  { name: 'حلويات مصرية', subs: ['بسبوسه', 'علب مشكل', 'مكس شرقي', 'جلاش', 'اطباق', 'كنافه', 'علب شرقي جاهزة'] },
+  { name: 'حلويات غربية', subs: ['تشيز كيك', 'كب كيك', 'دونات', 'تارت', 'تورتات'] },
+  { name: 'ميكس سويت',    subs: ['علب هدايا', 'ملبن'] },
+  { name: 'مخبوزات',      subs: ['خبز', 'كرواسون', 'بسكوت'] },
+  { name: 'شيكولاته',     subs: ['بوكس', 'ألواح'] },
+  { name: 'كحك 2026',     subs: ['كحك سادة', 'كحك بالعجمية', 'كحك محشي'] },
+  { name: 'المولد 2026',  subs: ['حلاوة المولد', 'علب المولد', 'عروسة المولد'] },
+  { name: 'آيس كريم',     subs: ['نص لتر', 'كوب', 'عبوات عائلية'] }
+];
+document.getElementById('navList').innerHTML = menu.map(m => `
+  <li class="has-drop">
+    <a href="#" data-nf>${m.name}</a>
+    <ul class="drop">
+      <li><a href="#" data-nf data-go="${m.name}" class="all">عرض الكل</a></li>
+      ${m.subs.map(x => `<li><a href="#" data-nf>${x}</a></li>`).join('')}
+    </ul>
+  </li>`).join('');
 
 /* ============================================================
    2) رسم الصفحة
@@ -112,7 +135,6 @@ function sectionHTML(s) {
   if (!s.carousel) return `<section class="psec"><div class="container">${title}<div class="grid">${cards}</div></div></section>`;
   return `<section class="psec"><div class="container">${title}
     <div class="car-row">
-      <a href="#" data-nf class="spec">${imgTag(s.special.img, '')}<div>${s.special.text}</div></a>
       <div class="car">
         <button class="car-btn prev" type="button" aria-label="Previous"><svg class="ic"><use href="#i-left"/></svg></button>
         <div class="grid">${cards}</div>
@@ -175,12 +197,6 @@ const isMobile = () => window.innerWidth <= 900;
 function toggleMenu(open) { navEl.classList.toggle('open', open); overlay.classList.toggle('show', open); }
 document.getElementById('burger').addEventListener('click', () => toggleMenu(!navEl.classList.contains('open')));
 overlay.addEventListener('click', () => toggleMenu(false));
-// موبايل: "حلويات مصرية" بتفتح القايمة الفرعية بدل ما تروح لصفحة
-document.querySelector('.has-drop > a').addEventListener('click', (e) => {
-  if (!isMobile()) return;
-  e.preventDefault(); e.stopPropagation();
-  e.currentTarget.parentElement.classList.toggle('open');
-});
 navEl.addEventListener('click', (e) => { if (e.target.closest('a') && isMobile()) toggleMenu(false); });
 // سحب البانر بالصباع
 let touchX = null;
