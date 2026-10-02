@@ -223,13 +223,21 @@ function route(label, el) {
   showPage(label, grid(allProducts.filter(p => p.cat === label)));   // أي قسم تاني
 }
 
+// قفل قوايم القائمة
+const closeDrops = () => document.querySelectorAll('.has-drop.open').forEach(l => l.classList.remove('open'));
+document.addEventListener('click', (e) => { if (!e.target.closest('.has-drop')) closeDrops(); });
 // بنلقط كل ضغطة على data-nf قبل ما script.js يفتح 404
 document.addEventListener('click', (e) => {
   const el = e.target.closest('[data-nf]'); if (!el) return;
-  if (el.parentElement.classList.contains('has-drop') && isMobile()) return;   // موبايل: افتح القائمة الفرعية
   e.preventDefault(); e.stopImmediatePropagation();
+  const li = el.parentElement;
+  if (li.classList.contains('has-drop')) {                       // اسم القسم نفسه: يفتح/يقفل قايمته
+    const was = li.classList.contains('open'); closeDrops(); li.classList.toggle('open', !was); return;
+  }
+  closeDrops();
   if (isMobile()) toggleMenu(false);
-  route(toAr(el.classList.contains('spec') ? 'حلويات غربية' : el.textContent.trim().replace(/\s+/g, ' ')), el);
+  // data-go = "عرض الكل" بيودّي لصفحة القسم الأب
+  route(toAr(el.dataset.go || el.textContent.trim().replace(/\s+/g, ' ')), el);
 }, true);
 
 pageEl.addEventListener('click', (e) => { if (e.target.id === 'crumbHome') { e.preventDefault(); showHome(); } });
