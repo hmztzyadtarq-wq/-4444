@@ -60,7 +60,9 @@ img { display: block; max-width: 100%; }
 .nav > ul > li > a { display: block; padding: 8px 12px; color: var(--gold); font-size: 15.5px; font-weight: 600; border-radius: 30px; }
 .nav > ul > li:hover > a { background: #dff2f8; }
 .drop { display: none; position: absolute; top: 100%; inset-inline-start: 0; margin-top: 6px; width: 200px; background: #fff; border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,.15); padding: 6px 0; z-index: 30; }
-.has-drop:hover .drop { display: block; }
+.has-drop.open .drop { display: block; }
+.has-drop > a::after { content: "▾"; font-size: 10px; margin-inline-start: 5px; }
+.drop .all { font-weight: 700; color: var(--gold); }
 .drop a { display: block; padding: 11px 32px; font-size: 14px; color: #222; }
 .drop a:hover { background: var(--cream); }
 
@@ -113,12 +115,7 @@ img { display: block; max-width: 100%; }
 .add .ic { width: 18px; height: 18px; }
 
 /* سلايدر المنتجات (الصف الأخير) + الدايرة الخاصة */
-.car-row { display: flex; gap: 30px; align-items: center; }
-.spec { flex: 0 0 330px; aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--gold); overflow: hidden; position: relative; background: #e3f3f8; }
-.spec img { width: 100%; height: 100%; object-fit: cover; }
-.spec::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,.45); }
-.spec div { position: absolute; inset: 0; z-index: 2; display: grid; place-content: center; text-align: center; color: #fff; font: 800 22px 'Cairo'; letter-spacing: 2px; padding: 0 44px; }
-.spec div::before, .spec div::after { content: ''; display: block; width: 34px; height: 3px; background: var(--gold-light); margin: 12px auto; }
+.car-row { display: block; }
 .car { position: relative; flex: 1; min-width: 0; }
 .car .grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; direction: ltr; gap: 24px; padding: 4px 2px 10px; scrollbar-width: none; }
 .car .grid::-webkit-scrollbar { display: none; }
@@ -183,7 +180,6 @@ html[dir="ltr"] .car .card { direction: ltr; }
   .nav > ul { flex-direction: column; align-items: stretch; justify-content: flex-start; height: auto; gap: 0; padding: 56px 0 24px; }
   .nav > ul > li > a { padding: 14px 22px; border-radius: 0; border-bottom: 1px solid var(--line); }
   .drop { position: static; display: none; width: auto; margin: 0; box-shadow: none; border-radius: 0; background: var(--cream); padding: 0; }
-  .has-drop:hover .drop { display: none; }
   .has-drop.open .drop { display: block; }
   .drop a { padding: 12px 38px; }
   .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 55; }
@@ -201,8 +197,7 @@ html[dir="ltr"] .car .card { direction: ltr; }
   .grid { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; scrollbar-width: none; }
   .grid::-webkit-scrollbar { display: none; }
   .card, .car .card { flex: 0 0 220px; scroll-snap-align: start; }
-  .spec { display: none; }
-  .car-btn { width: 34px; height: 34px; }
+    .car-btn { width: 34px; height: 34px; }
   .foot-row { gap: 24px; }
   .totop { inset-inline-start: 14px; bottom: 50px; width: 42px; height: 42px; }
 }
